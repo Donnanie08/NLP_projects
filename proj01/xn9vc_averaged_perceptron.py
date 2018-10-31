@@ -1,29 +1,46 @@
-from xn9vc_feature_vector import FeatureVector
+from xn9vc_commons import Commons
 import numpy as np
+import random
 
 
 class AveragedPerceptron:
     def __init__(self):
-        self.feature_vector = FeatureVector()
+        self.commons = Commons()
 
-    def averaged_perceptron(self, X, y):
+
+    def predict(self, X, theta):
+        predicted_y = [0 if np.dot(theta, self.commons.feature_vector(x, 0)) \
+                               >= np.dot(theta, self.commons.feature_vector(x, 1)) else 1
+                           for i, x in enumerate(X)]
+        return predicted_y
+
+
+
+    def averaged_perceptron(self, X, y, epoch=5):
+        theta = np.zeros(2 * len(X[0]), dtype=int)
+        theta_sum = np.zeros(2 * len(X[0]), dtype=int)
+
+        dataset = [(X[i], y[i]) for i in range(len(X))]
         t = 0
-        theta = []
-        theta.append(0)
+        for iter in range(epoch + 1):
+            for i, data in enumerate(dataset):
+                t += 1
+                # find max
+                predicted_y = 0 if np.dot(theta, self.commons.feature_vector(data[0], 0)) \
+                                   >= np.dot(theta, self.commons.feature_vector(data[0], 1)) else 1
 
-        for i, x in enumerate(X):
-            t += 1
-            # find max
-            predicted_y = max(np.dot(theta[t - 1], self.feature_vector.feature_vector(x, 0)),
-                              np.dot(theta[t - 1], self.feature_vector.feature_vector(x, 0)))
+                if predicted_y != data[1]:
+                    theta = theta + self.commons.feature_vector(data[0], data[1]) \
+                            - self.commons.feature_vector(data[0], predicted_y)
 
-            if predicted_y != y[i]:
-                theta[t] = theta[t - 1] + self.feature_vector.feature_vector(x,y[i]) \
-                           - self.feature_vector.feature_vector(x, predicted_y)
-            else:
-                theta[t] = theta[t - 1]
+                # accumulate theta
+                theta_sum += theta
+
+            # shuffule X mapping to y for next epoch
+            random.shuffle(dataset)
+
 
         # average the theta
-        averaged_theta = sum(theta) / t
+        averaged_theta = theta_sum / t
 
-        return theta
+        return averaged_theta

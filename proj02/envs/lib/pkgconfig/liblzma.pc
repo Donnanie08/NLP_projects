@@ -1,0 +1,19 @@
+#
+# Author: Lasse Collin
+#
+# This file has been put into the public domain.
+# You can do whatever you want with this file.
+#
+
+prefix=/Users/xinnie/Documents/CS/master/NLP/projects_submisison/proj02/envs
+exec_prefix=/Users/xinnie/Documents/CS/master/NLP/projects_submisison/proj02/envs
+libdir=/Users/xinnie/Documents/CS/master/NLP/projects_submisison/proj02/envs/lib
+includedir=/Users/xinnie/Documents/CS/master/NLP/projects_submisison/proj02/envs/include
+
+Name: liblzma
+Description: General purpose data compression library
+URL: https://tukaani.org/xz/
+Version: 5.2.4
+Cflags: -I${includedir}
+Libs: -L${libdir} -llzma
+Libs.private: -D_THREAD_SAFE -pthread 

@@ -1,0 +1,21 @@
+==> 2018-10-28 22:13:40 <==
+# cmd: /anaconda3/bin/conda create -p /Users/xinnie/Documents/CS/master/NLP/projects_submisison/proj02/envs -y python=3.6
+# conda version: 4.5.11
++defaults::ca-certificates-2018.03.07-0
++defaults::certifi-2018.10.15-py36_0
++defaults::libcxx-4.0.1-hcfea43d_1
++defaults::libcxxabi-4.0.1-hcfea43d_1
++defaults::libedit-3.1.20170329-hb402a30_2
++defaults::libffi-3.2.1-h475c297_4
++defaults::ncurses-6.1-h0a44026_0
++defaults::openssl-1.1.1-h1de35cc_0
++defaults::pip-10.0.1-py36_0
++defaults::python-3.6.7-haf84260_0
++defaults::readline-7.0-h1de35cc_5
++defaults::setuptools-40.4.3-py36_0
++defaults::sqlite-3.25.2-ha441bb4_0
++defaults::tk-8.6.8-ha441bb4_0
++defaults::wheel-0.32.2-py36_0
++defaults::xz-5.2.4-h1de35cc_4
++defaults::zlib-1.2.11-hf3cbc9b_2
+# update specs: ['python=3.6']

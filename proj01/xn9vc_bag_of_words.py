@@ -15,7 +15,7 @@ class BagOfWords:
 
     def __init__(self):
         self.stop_words = stopwords.words('english') + list(string.punctuation)
-        self.vectorizer = []
+
 
 
     def plot_histogram(self, vocabulary):
@@ -23,14 +23,12 @@ class BagOfWords:
         plt.show()
 
 
-    def bag_of_words(self):
+    def bag_of_words(self, data):
         '''
         Finds all vocabulary from the input data
         :return:
         '''
 
-        # read trn_data
-        trn_data = open('./trn.data').read().strip().split('\n')
         min_df = 1 - 0.6
 
         self.vocabulary = defaultdict(int) # dictionary of words with frequency
@@ -41,7 +39,7 @@ class BagOfWords:
 
 
         # tokenize
-        for s in trn_data:
+        for s in data:
             words = [w for w in wordpunct_tokenize(s.lower()) if w not in self.stop_words]
             tokenized_data.append(words)
             for w in words:
@@ -49,11 +47,10 @@ class BagOfWords:
 
         # sorted dictionary on frequencies, by descending order
         # int(len(self.vocabulary)*min_df)
-        sliced_dict = {key : value for key, value in islice(sorted(self.vocabulary.items(), key=lambda kv: kv[1], reverse=True), 15)}
-        print(len(sliced_dict))
+        sliced_dict = {key : value for key, value in islice(sorted(self.vocabulary.items(), key=lambda kv: kv[1], reverse=True), 1000)}
 
         # vectorize
-        self.vectorizer = np.asarray([[1 if w in sample else 0 for w in sliced_dict.keys()] for sample in tokenized_data])
+        return np.asarray([[1 if w in sample else 0 for w in sliced_dict.keys()] for sample in tokenized_data])
 
 
 
