@@ -71,18 +71,21 @@ if __name__ == '__main__':
     # crf.train()
 
     hmm = HMM()
-    # word_tag, tag_tag, tags = hmm.scan_data("trn.pos")
-    # emission = hmm.emission_prob(word_tag, tags)
+    word_tag, tag_tag, tags = hmm.scan_data("trn.pos")
+    emission = hmm.emission_prob(word_tag, tags)
     # write_txt(emission, "./xn9vc-eprob.txt")
-    # transition = hmm.transition_prob(tag_tag, tags)
+    transition = hmm.transition_prob(tag_tag, tags)
     # write_txt(tag_tag, "./xn9vc-tprob.txt")
-    # emission_smoothed = hmm.emission_prob_smoothed(word_tag, tags)
+    emission_smoothed = hmm.emission_prob_smoothed(word_tag, tags)
     # write_txt(emission_smoothed, "./xn9vc-eprob-smoothed.txt")
-    # transition_smoothed = hmm.transition_prob_smoothed(tag_tag, tags)
+    transition_smoothed = hmm.transition_prob_smoothed(tag_tag, tags)
     # write_txt(tag_tag, "./xn9vc-tprob-smoothed.txt")
 
 
     # test viterbi data with dev.pos
+    sequences, tag_dev = hmm.scan_dev_data("dev.pos")
+    for seq in sequences:
+        tag_pred = hmm.viterbi(seq)
 
     print("0")
 

@@ -4,6 +4,7 @@ import numpy as np
 
 class HMM:
     def __init__(self):
+        self.K = 5 # threshold
         self.emission = {}
         self.transition = {}
         self.emission_smoothed = {}
@@ -15,6 +16,7 @@ class HMM:
         self.tags = defaultdict(int)
         self.V = set() # vocab set
         self.N = set() # tags set
+        self.N_list = [] # copy of N in the list format
 
 
     def preprocess_data(self, line):
@@ -39,36 +41,58 @@ class HMM:
                 self.tags["END"] += 1
             states.append("END")
 
-            for s_prev, s_cur in zip(states[:-1], states[1:]):  # construct tag_tag on current and previous
+            for s_prev, s_cur in zip(states[:-1], states[1:]):  # construct tag_tag on previous and current
                 self.tag_tag[(s_prev, s_cur)] += 1
 
 
-
     def scan_data(self, filename):
+
         print("Scan data from {}".format(filename))
 
         with open(filename, encoding='utf8') as filein:
             for line in filein:
                 self.preprocess_data(line)
 
+
+        # now count the frequency with less than K
+        for key, value in list(self.word_tag.items()):
+            if value <= self.K:
+                self.word_tag[(key[0], "Unk")] += value
+                del self.word_tag[key]
+
+
+        self.N_list = list(self.N)
+
         return self.word_tag, self.tag_tag, self.tags
 
-    def read_saved_txt(self, word_tag_file, tag_tag_file):
-        print("Read data from saved txt file {}".format(word_tag_file))
-        print("Read data from saved txt file {}".format(tag_tag_file))
 
-        word_tag, tag_tag, tags, vocab = {}, {}, set(), set()
-        with open(word_tag_file) as filein:
+    def scan_dev_data(self, filename):
+        '''
+        Temporary maintain for dev data testing, should not use self variables for both trn and test!
+        '''
+        print("Scan data from {}".format(filename))
+
+        tag_true = [] # used for calculate accuracy
+        sequences = []
+
+
+        with open(filename, encoding='utf8') as filein:
             for line in filein:
-                word_tag[(line[0], line[1])] = line[2]
-                tags.add(line[0])
-                vocab.add(line[1])
+                line = line.strip('\n')
+                if len(line) != 0:
+                    items = line.split(' ')
+                    tag_sequence = []
+                    seq = []
+                    for t in items:
+                        t = t.split("/")
+                        tag_sequence.append(t[1])
+                        seq.append(t[0]) # words
 
-        with open(tag_tag_file) as filein:
-            for line in filein:
-                tag_tag[(line[0], line[1])] = line[2]
+                    tag_true.append(tag_sequence)
+                    sequences.append(seq)
 
-        return word_tag, tag_tag, tags, vocab
+
+        return sequences, tag_true
 
 
     def transition_prob(self, tag_tag, tags):
@@ -95,7 +119,7 @@ class HMM:
             prob = (val + 1) / (tags[tag_prev] + len(self.N))
             self.transition_smoothed[key] = prob
 
-        for key, value in self.transition_smoothed:
+        for key, value in self.transition_smoothed.items():
             self.transition_smoothed_log[key] = math.log2(value)
 
         return self.transition_smoothed
@@ -108,29 +132,64 @@ class HMM:
             self.emission_smoothed[key] = prob
 
         # convert the smoothed data into log space
-        for key, value in self.emission_smoothed:
+        for key, value in self.emission_smoothed.items():
             self.emission_smoothed_log[key] = math.log2(value)
 
         return self.emission_smoothed
 
 
+    def get_score(self, word, tag_prev, tag_cur):
+        # compute the emission and transition probs of given pair of word and tag
+
+        emission = self.emission_smoothed_log.get((tag_cur, word))
+        transition = self.transition_smoothed_log.get((tag_prev, tag_cur))
+
+        if emission is None:
+            emission = self.emission_smoothed_log.get((tag_cur, "Unk"))
+        if transition is None:
+            transition = 0
+
+
+        score = emission + transition
+
+        return score
+
+
     def viterbi(self, sentence):
-        # sentence should a list only containing words!!
+        # sentence should a list only containing words!
 
-        sequence = []
-
-        score = defaultdict(int)  # scores list for Viterbi
+        viterbi_var = [0] * 10  # scores list for Viterbi
+        b = np.zeros((len(self.N_list), len(sentence)))  # scores list for Viterbi
         # calculate the score for first position
-        for i, k in enumerate(self.N):
-            score[i] = self.emission_smoothed_log[(k, sentence[0])] + self.transition_smoothed_log[("START", k)]
+        for i, k in enumerate(self.N_list):
+            viterbi_var[i] = self.get_score(sentence[0], "START", k)
 
 
-        # construct b list based on the size of sequence
-        b = np.zeros([self.N, sentence])
+        b = [""] * 10 # backpoints tracking
+        sequence = []
+        for m in range(1, len(sentence)):
+            new_viterbi_var = [0] * 10
+            new_b = [""] * 10
+            for k in range(0, len(self.N_list)):
+                score = [0] * 10
+                for i in range(0, len(self.N_list)):
+                    score[i] = viterbi_var[i] + self.get_score(m, self.N_list[k], self.N_list[i])
+                max_score = max(score)
+                new_viterbi_var[k] = max_score
+                new_b[k] = self.N_list[score.index(max_score)]
+            b = new_b
+            viterbi_var = new_viterbi_var
+            sequence.append(b[viterbi_var.index(max(viterbi_var))])
 
+
+        print("0")
 
         # Viterbi Algorithm
-        for
-            self.score.append()
+        # for
+        #     self.score.append()
 
         return sequence
+
+
+    def accuracy(self):
+        return
