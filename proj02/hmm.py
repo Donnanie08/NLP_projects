@@ -27,18 +27,17 @@ class HMM:
             for t in items:
                 t = t.split("/")
 
-                self.V.add(t[0])
-                self.N.add(t[1])
+                # self.V.add(t[0])
+                # self.N.add(t[1])
 
                 # hidden states, add START and END to the list
                 states.append(t[1])  # append the tag
 
                 tup = (t[1], t[0])
                 self.word_tag[tup] += 1
-                # tag_tag.append(t[1])
-                self.tags[t[1]] += 1
-                self.tags["START"] += 1
-                self.tags["END"] += 1
+                # self.tags[t[1]] += 1
+            self.tags["START"] += 1
+            self.tags["END"] += 1
             states.append("END")
 
             for s_prev, s_cur in zip(states[:-1], states[1:]):  # construct tag_tag on previous and current
@@ -59,9 +58,20 @@ class HMM:
             if value <= self.K:
                 self.word_tag[(key[0], "Unk")] += value
                 del self.word_tag[key]
+                # self.tags[key[0]] -= value
+            else:
+                self.V.add(key[1])
+                self.N.add(key[0])
+                self.tags[key[0]] += value
+
+
 
 
         self.N_list = list(self.N)
+
+        # sort for better print out
+        # sorted(self.word_tag)
+        # sorted(self.tag_tag)
 
         return self.word_tag, self.tag_tag, self.tags
 
@@ -182,14 +192,13 @@ class HMM:
             sequence.append(b[viterbi_var.index(max(viterbi_var))])
 
 
-        print("0")
-
-        # Viterbi Algorithm
-        # for
-        #     self.score.append()
-
         return sequence
 
 
-    def accuracy(self):
-        return
+    def accuracy(self, y_true, y_pred):
+        correct_cnt = 0
+        for true, pred in zip(y_true, y_pred):
+            if true == pred:
+                correct_cnt += 1
+
+        return float(correct_cnt) / float(len(y_pred))

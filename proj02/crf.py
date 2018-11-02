@@ -35,7 +35,8 @@ class CRF(object):
     def train(self):
         print("Training CRF ...")
         self.model = crfsuite.CRF(
-            algorithm='lbfgs',
+            # algorithm='lbfgs',
+            algorithm='ap',
             max_iterations=5)
         self.model.fit(self.trn_feats, self.trn_tags)
         trn_tags_pred = self.model.predict(self.trn_feats)
@@ -58,6 +59,24 @@ class CRF(object):
         word_feats = {'tok': sent.tokens[i]}
         # TODO for question 1
         # the i-th tag
+        features_dict = {
+            "tok.upper": sent.tokens[i].upper(),
+            "tok.fl": sent.tokens[0],
+            "tok.ll": sent.tokens[-1]
+        }
+
+        if len(sent.tokens[i]) > 2:
+            features_dict.update({"tok.fwl": sent.tokens[0:1],
+                                "tok.lwl": sent.tokens[-2:-1]})
+
+        if i > 0:
+            features_dict.update({"tok.prev": sent.tokens[i-1]})
+
+        if i < len(sent.tokens) - 1:
+            features_dict.update({"tok.next": sent.tokens[i+1]})
+
+        word_feats.update(features_dict)
+
         # 
         # TODO for question 2
         # add more features here
@@ -73,21 +92,20 @@ if __name__ == '__main__':
     hmm = HMM()
     word_tag, tag_tag, tags = hmm.scan_data("trn.pos")
     emission = hmm.emission_prob(word_tag, tags)
-    # write_txt(emission, "./xn9vc-eprob.txt")
+    write_txt(emission, "./xn9vc-eprob.txt")
     transition = hmm.transition_prob(tag_tag, tags)
-    # write_txt(tag_tag, "./xn9vc-tprob.txt")
+    write_txt(transition, "./xn9vc-tprob.txt")
     emission_smoothed = hmm.emission_prob_smoothed(word_tag, tags)
-    # write_txt(emission_smoothed, "./xn9vc-eprob-smoothed.txt")
+    write_txt(emission_smoothed, "./xn9vc-eprob-smoothed.txt")
     transition_smoothed = hmm.transition_prob_smoothed(tag_tag, tags)
-    # write_txt(tag_tag, "./xn9vc-tprob-smoothed.txt")
+    write_txt(transition_smoothed, "./xn9vc-tprob-smoothed.txt")
+    #
+    #
+    # # test viterbi data with dev.pos
+    # sequences, tag_dev = hmm.scan_dev_data("dev.pos")
+    # for seq in sequences:
+    #     tag_pred = hmm.viterbi(seq)
 
-
-    # test viterbi data with dev.pos
-    sequences, tag_dev = hmm.scan_dev_data("dev.pos")
-    for seq in sequences:
-        tag_pred = hmm.viterbi(seq)
-
-    print("0")
 
 
     
