@@ -102,9 +102,9 @@ if __name__ == '__main__':
     #
     #
     # # test viterbi data with dev.pos
-    # sequences, tag_dev = hmm.scan_dev_data("dev.pos")
-    # for seq in sequences:
-    #     tag_pred = hmm.viterbi(seq)
+    sequences, tag_dev = hmm.scan_dev_data("dev.pos")
+    for seq in sequences:
+        tag_pred = hmm.viterbi(seq)
 
 
 

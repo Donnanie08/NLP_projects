@@ -130,7 +130,7 @@ class HMM:
             self.transition_smoothed[key] = prob
 
         for key, value in self.transition_smoothed.items():
-            self.transition_smoothed_log[key] = math.log2(value)
+            self.transition_smoothed_log[key] = math.log(value)
 
         return self.transition_smoothed
 
@@ -143,7 +143,7 @@ class HMM:
 
         # convert the smoothed data into log space
         for key, value in self.emission_smoothed.items():
-            self.emission_smoothed_log[key] = math.log2(value)
+            self.emission_smoothed_log[key] = math.log(value)
 
         return self.emission_smoothed
 
@@ -169,13 +169,15 @@ class HMM:
         # sentence should a list only containing words!
 
         viterbi_var = [0] * 10  # scores list for Viterbi
-        b = np.zeros((len(self.N_list), len(sentence)))  # scores list for Viterbi
+        b = np.chararray((len(self.N_list), len(sentence)))  # scores list for Viterbi
+        b[:] = ""
         # calculate the score for first position
         for i, k in enumerate(self.N_list):
             viterbi_var[i] = self.get_score(sentence[0], "START", k)
 
 
-        b = [""] * 10 # backpoints tracking
+
+        # b = [""] * 10 # backpoints tracking
         sequence = []
         for m in range(1, len(sentence)):
             new_viterbi_var = [0] * 10
@@ -183,13 +185,13 @@ class HMM:
             for k in range(0, len(self.N_list)):
                 score = [0] * 10
                 for i in range(0, len(self.N_list)):
-                    score[i] = viterbi_var[i] + self.get_score(m, self.N_list[k], self.N_list[i])
+                    score[i] = viterbi_var[i] + self.get_score(sentence[m], self.N_list[i], self.N_list[k])
                 max_score = max(score)
                 new_viterbi_var[k] = max_score
-                new_b[k] = self.N_list[score.index(max_score)]
-            b = new_b
+                # new_b[k] =
+                b[k][m] = self.N_list[score.index(max_score)]
             viterbi_var = new_viterbi_var
-            sequence.append(b[viterbi_var.index(max(viterbi_var))])
+            sequence.append(b[viterbi_var.index(max(viterbi_var))][m])
 
 
         return sequence
