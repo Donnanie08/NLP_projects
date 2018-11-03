@@ -5,6 +5,10 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/crf.py" beforeDir="false" afterPath="$PROJECT_DIR$/crf.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/hmm.py" beforeDir="false" afterPath="$PROJECT_DIR$/hmm.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xn9vc-eprob-smoothed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xn9vc-eprob-smoothed.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xn9vc-eprob.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xn9vc-eprob.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xn9vc-tprob-smoothed.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xn9vc-tprob-smoothed.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/xn9vc-tprob.txt" beforeDir="false" afterPath="$PROJECT_DIR$/xn9vc-tprob.txt" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/venv/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -46,53 +50,46 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="pos" value="7" />
-          <entry key="py" value="22" />
-          <entry key="txt" value="12" />
-          <entry key="word" value="1" />
+          <entry key="pos" value="8" />
+          <entry key="py" value="27" />
+          <entry key="txt" value="15" />
+          <entry key="word" value="3" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="20" />
-          <entry key="Python" value="22" />
+          <entry key="PLAIN_TEXT" value="26" />
+          <entry key="Python" value="27" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="Python Console" value="2263" />
-          <entry key="py" value="8210" />
+          <entry key="Python Console" value="3355" />
+          <entry key="crf" value="5" />
+          <entry key="py" value="9892" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="Python" value="10473" />
+          <entry key="Python" value="13252" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <splitter split-orientation="horizontal" split-proportion="0.6210008">
+    <splitter split-orientation="horizontal" split-proportion="0.49372086">
       <split-first>
         <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/hmm.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="126">
-                  <caret line="172" column="17" lean-forward="true" selection-start-line="172" selection-start-column="17" selection-end-line="172" selection-end-column="17" />
+                <state relative-caret-position="630">
+                  <caret line="190" column="26" lean-forward="true" selection-start-line="190" selection-start-column="26" selection-end-line="190" selection-end-column="26" />
                   <folding>
                     <element signature="e#0#35#0" expanded="true" />
-                    <marker date="1541185631207" expanded="true" signature="4428:4882" ph="..." />
+                    <marker date="1541209433700" expanded="true" signature="3916:3923" ph="..." />
+                    <marker date="1541209433700" expanded="true" signature="5553:6073" ph="..." />
                   </folding>
-                </state>
-              </provider>
-            </entry>
-          </file>
-          <file pinned="false" current-in-tab="false">
-            <entry file="file:///anaconda3/lib/python3.7/site-packages/numpy/core/defchararray.py">
-              <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="114">
-                  <caret line="1851" selection-start-line="1851" selection-end-line="1851" />
                 </state>
               </provider>
             </entry>
@@ -100,8 +97,8 @@
           <file pinned="false" current-in-tab="false">
             <entry file="file://$PROJECT_DIR$/dev.pos">
               <provider selected="true" editor-type-id="text-editor">
-                <state>
-                  <caret column="5" selection-start-column="5" selection-end-column="5" />
+                <state relative-caret-position="915">
+                  <caret line="61" column="44" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
                 </state>
               </provider>
             </entry>
@@ -125,8 +122,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/crf.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="-196">
-                  <caret line="37" column="30" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="30" />
+                <state relative-caret-position="197">
+                  <caret line="85" column="26" lean-forward="true" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
                   <folding>
                     <element signature="e#90#108#0" expanded="true" />
                   </folding>
@@ -151,8 +148,8 @@
       <find>A,'A'</find>
       <find>A,'hourly'</find>
       <find>gut-wrenching</find>
-      <find>O,'Unk</find>
       <find>V, 'National'</find>
+      <find>O,'Unk</find>
     </findStrings>
     <replaceStrings>
       <replace />
@@ -167,12 +164,12 @@
         <option value="$PROJECT_DIR$/preprocessing.py" />
         <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/util.py" />
-        <option value="$PROJECT_DIR$/crf.py" />
         <option value="$PROJECT_DIR$/hmm.py" />
+        <option value="$PROJECT_DIR$/crf.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="width" value="1028" />
     <option name="height" value="900" />
   </component>
@@ -277,23 +274,23 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="0" width="1440" height="900" extended-state="6" />
+    <frame x="0" y="0" width="3008" height="1692" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12804006" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.06035064" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3298397" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.52891564" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.2595561" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="8" />
       <window_info anchor="bottom" id="Event Log" order="9" side_tool="true" />
-      <window_info anchor="bottom" id="Python Console" order="10" weight="0.36128238" />
+      <window_info anchor="bottom" id="Python Console" order="10" visible="true" weight="0.36128238" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -309,35 +306,27 @@
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/hmm.py</url>
-          <line>196</line>
-          <option name="timeStamp" value="82" />
+          <line>125</line>
+          <option name="timeStamp" value="136" />
         </line-breakpoint>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/hmm.py</url>
-          <line>180</line>
-          <option name="timeStamp" value="106" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/hmm.py</url>
-          <line>192</line>
-          <option name="timeStamp" value="108" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/hmm.py</url>
-          <line>164</line>
-          <option name="timeStamp" value="110" />
+          <url>file://$PROJECT_DIR$/crf.py</url>
+          <line>133</line>
+          <option name="timeStamp" value="139" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+    <watches-manager>
+      <configuration name="PythonConfigurationType">
+        <watch expression="self.tags" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/proj02/util.py" />
     <entry file="file://$PROJECT_DIR$/proj02/crf.py" />
     <entry file="file://$PROJECT_DIR$/preprocessing.py" />
     <entry file="file://$PROJECT_DIR$/main.py" />
-    <entry file="file://$PROJECT_DIR$/tst.word">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/xn9vc-eprob.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -345,20 +334,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="751">
           <caret line="89" column="25" lean-forward="true" selection-start-line="89" selection-start-column="25" selection-end-line="89" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/trn.pos">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="69" selection-start-column="56" selection-end-column="69" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///anaconda3/lib/python3.7/codecs.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="320" selection-start-line="320" selection-end-line="320" />
         </state>
       </provider>
     </entry>
@@ -393,37 +368,83 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///anaconda3/lib/python3.7/site-packages/numpy/core/defchararray.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="1851" selection-start-line="1851" selection-end-line="1851" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dev.pos">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="5" selection-start-column="5" selection-end-column="5" />
+        <state relative-caret-position="915">
+          <caret line="61" column="44" selection-start-line="61" selection-start-column="44" selection-end-line="61" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/crf.py">
+    <entry file="file://$PROJECT_DIR$/trn.pos">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-196">
-          <caret line="37" column="30" selection-start-line="37" selection-start-column="25" selection-end-line="37" selection-end-column="30" />
-          <folding>
-            <element signature="e#90#108#0" expanded="true" />
-          </folding>
+        <state>
+          <caret column="69" selection-start-column="56" selection-end-column="69" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tst.word">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="525">
+          <caret line="35" column="35" selection-start-line="35" selection-start-column="35" selection-end-line="35" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/xn9vc-viterbi.txt">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file:///anaconda3/lib/python3.7/codecs.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="320" selection-start-line="320" selection-end-line="320" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda3/lib/python3.7/site-packages/numpy/core/defchararray.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3">
+          <caret line="1855" column="31" lean-forward="true" selection-start-line="1855" selection-start-column="31" selection-end-line="1855" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda3/lib/python3.7/encodings/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1065">
+          <caret line="73" selection-start-line="73" selection-end-line="73" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda3/lib/python3.7/site-packages/numpy/core/numeric.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="392">
+          <caret line="552" selection-start-line="552" selection-end-line="552" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///anaconda3/lib/python3.7/site-packages/numpy/lib/function_base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="981">
+          <caret line="4521" selection-start-line="4521" selection-end-line="4521" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/hmm.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="172" column="17" lean-forward="true" selection-start-line="172" selection-start-column="17" selection-end-line="172" selection-end-column="17" />
+        <state relative-caret-position="630">
+          <caret line="190" column="26" lean-forward="true" selection-start-line="190" selection-start-column="26" selection-end-line="190" selection-end-column="26" />
           <folding>
             <element signature="e#0#35#0" expanded="true" />
-            <marker date="1541185631207" expanded="true" signature="4428:4882" ph="..." />
+            <marker date="1541209433700" expanded="true" signature="3916:3923" ph="..." />
+            <marker date="1541209433700" expanded="true" signature="5553:6073" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/crf.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="197">
+          <caret line="85" column="26" lean-forward="true" selection-start-line="85" selection-start-column="26" selection-end-line="85" selection-end-column="26" />
+          <folding>
+            <element signature="e#90#108#0" expanded="true" />
           </folding>
         </state>
       </provider>

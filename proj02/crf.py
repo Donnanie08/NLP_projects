@@ -90,22 +90,53 @@ if __name__ == '__main__':
     # crf.train()
 
     hmm = HMM()
+
+    # # with alpha and beta are 1
+    # word_tag, tag_tag, tags = hmm.scan_data("trn.pos")
+    # emission = hmm.emission_prob(word_tag, tags)
+    # # write_txt(emission, "./xn9vc-eprob.txt")
+    # transition = hmm.transition_prob(tag_tag, tags)
+    # # write_txt(transition, "./xn9vc-tprob.txt")
+    # emission_smoothed = hmm.emission_prob_smoothed(word_tag, tags)
+    # # write_txt(emission_smoothed, "./xn9vc-eprob-smoothed.txt")
+    # transition_smoothed = hmm.transition_prob_smoothed(tag_tag, tags)
+    # # write_txt(transition_smoothed, "./xn9vc-tprob-smoothed.txt")
+    # #
+    # #
+    # # # test viterbi data with dev.pos
+    # sequences, tag_dev = hmm.scan_dev_data("dev.pos")
+    # tag_pred = []
+    # for seq in sequences:
+    #     pred = hmm.viterbi(seq)
+    #     tag_pred.append(pred)
+
+    # with tuning alpha and beta
+
+    tune_params = {}
+    alpha = [0.001, 0.005, 0.0001, 10]
+    beta = [0.001, 0.005, 0.0001, 10]
     word_tag, tag_tag, tags = hmm.scan_data("trn.pos")
     emission = hmm.emission_prob(word_tag, tags)
-    write_txt(emission, "./xn9vc-eprob.txt")
     transition = hmm.transition_prob(tag_tag, tags)
-    write_txt(transition, "./xn9vc-tprob.txt")
-    emission_smoothed = hmm.emission_prob_smoothed(word_tag, tags)
-    write_txt(emission_smoothed, "./xn9vc-eprob-smoothed.txt")
-    transition_smoothed = hmm.transition_prob_smoothed(tag_tag, tags)
-    write_txt(transition_smoothed, "./xn9vc-tprob-smoothed.txt")
-    #
-    #
-    # # test viterbi data with dev.pos
+
     sequences, tag_dev = hmm.scan_dev_data("dev.pos")
-    for seq in sequences:
-        tag_pred = hmm.viterbi(seq)
 
+    for a in alpha:
+        for b in beta:
+            emission_smoothed = hmm.emission_prob_smoothed(word_tag, tags, alpha=a)
+            transition_smoothed = hmm.transition_prob_smoothed(tag_tag, tags, beta=b)
 
+            tag_pred_tune = []
 
-    
+            for seq in sequences:
+                pred_tune = hmm.viterbi(seq)
+                tag_pred_tune.append(pred_tune)
+            tune_params[(a, b)] = hmm.accuracy(tag_dev, tag_pred_tune)
+
+    print(tune_params)
+
+    # accu = hmm.accuracy(tag_dev, tag_pred)
+    # print("Accuracy of Viterbi Algorithm:", accu)
+
+    # hmm.test_data("tst.word", "xn9vc-viterbi.txt")
+

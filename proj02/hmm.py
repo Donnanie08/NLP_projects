@@ -1,6 +1,7 @@
 from collections import defaultdict
 import math
 import numpy as np
+from collections import OrderedDict
 
 class HMM:
     def __init__(self):
@@ -70,8 +71,11 @@ class HMM:
         self.N_list = list(self.N)
 
         # sort for better print out
-        # sorted(self.word_tag)
-        # sorted(self.tag_tag)
+        self.word_tag = OrderedDict(sorted(self.word_tag.items(), key=lambda t: t[0][1], reverse=True))
+        self.tag_tag = OrderedDict(sorted(self.tag_tag.items(), key=lambda t: t[0][0], reverse=False))
+
+
+
 
         return self.word_tag, self.tag_tag, self.tags
 
@@ -105,6 +109,26 @@ class HMM:
         return sequences, tag_true
 
 
+    def test_data(self, inputfile, outputfile):
+        print("Scan data from {}".format(inputfile))
+        print("Write data to {}".format(outputfile))
+        output = open(outputfile, 'w')
+        with open(inputfile, encoding='utf8') as filein:
+            for line in filein:
+                line = line.strip('\n')
+                if len(line) != 0:
+                    sentence = line.split(' ')
+                    tag_sequence = self.viterbi(sentence)
+
+                outline = ""
+                for s, t in zip(sentence, tag_sequence):
+                    outline += (s + "/" + t + " ")
+                output.write(outline+"\n")
+
+
+
+
+
     def transition_prob(self, tag_tag, tags):
         for key, val in tag_tag.items():
             tag_prev = key[0]
@@ -123,10 +147,10 @@ class HMM:
         return self.emission
 
 
-    def transition_prob_smoothed(self, tag_tag, tags):
+    def transition_prob_smoothed(self, tag_tag, tags, beta=1):
         for key, val in tag_tag.items():
             tag_prev = key[0]
-            prob = (val + 1) / (tags[tag_prev] + len(self.N))
+            prob = (val + beta) / (tags[tag_prev] + len(self.N) * beta)
             self.transition_smoothed[key] = prob
 
         for key, value in self.transition_smoothed.items():
@@ -135,11 +159,15 @@ class HMM:
         return self.transition_smoothed
 
 
-    def emission_prob_smoothed(self, word_tag, tags):
+    def emission_prob_smoothed(self, word_tag, tags, alpha=1):
         for key, val in word_tag.items():
-            tag = key[0]
-            prob = (val + 1) / (tags[tag] + len(self.V))
-            self.emission_smoothed[key] = prob
+
+            for tag in self.N_list:
+                if self.word_tag.get((tag , key[1])) is None: # pair is not appear in the word_tag
+                    self.emission_smoothed[(tag, key[1])] = (0 + alpha) / (tags[tag] + len(self.V) * alpha)
+                else:
+                    prob = (val + alpha) / (tags[tag] + len(self.V)*alpha)
+                    self.emission_smoothed[key] = prob
 
         # convert the smoothed data into log space
         for key, value in self.emission_smoothed.items():
@@ -150,8 +178,11 @@ class HMM:
 
     def get_score(self, word, tag_prev, tag_cur):
         # compute the emission and transition probs of given pair of word and tag
+        if word == "":
+            emission = 0
+        else:
+            emission = self.emission_smoothed_log.get((tag_cur, word))
 
-        emission = self.emission_smoothed_log.get((tag_cur, word))
         transition = self.transition_smoothed_log.get((tag_prev, tag_cur))
 
         if emission is None:
@@ -168,39 +199,50 @@ class HMM:
     def viterbi(self, sentence):
         # sentence should a list only containing words!
 
-        viterbi_var = [0] * 10  # scores list for Viterbi
-        b = np.chararray((len(self.N_list), len(sentence)))  # scores list for Viterbi
+        # viterbi_var = [0] * 10  # scores list for Viterbi
+        viterbi_var = np.zeros((len(self.N_list), len(sentence)))
+        b = np.chararray((len(self.N_list), len(sentence)), unicode=True)  # scores list for Viterbi
         b[:] = ""
         # calculate the score for first position
         for i, k in enumerate(self.N_list):
-            viterbi_var[i] = self.get_score(sentence[0], "START", k)
-
+            viterbi_var[i][0] = self.get_score(sentence[0], "START", k)
 
 
         # b = [""] * 10 # backpoints tracking
         sequence = []
         for m in range(1, len(sentence)):
-            new_viterbi_var = [0] * 10
-            new_b = [""] * 10
+            # new_viterbi_var = [0] * 10
+            # new_b = [""] * 10
             for k in range(0, len(self.N_list)):
                 score = [0] * 10
                 for i in range(0, len(self.N_list)):
-                    score[i] = viterbi_var[i] + self.get_score(sentence[m], self.N_list[i], self.N_list[k])
+                    score[i] = viterbi_var[i][m-1] + self.get_score(sentence[m], self.N_list[i], self.N_list[k])
                 max_score = max(score)
-                new_viterbi_var[k] = max_score
+                viterbi_var[k][m] = max_score
                 # new_b[k] =
                 b[k][m] = self.N_list[score.index(max_score)]
-            viterbi_var = new_viterbi_var
-            sequence.append(b[viterbi_var.index(max(viterbi_var))][m])
+            # viterbi_var = new_viterbi_var
+            cur_column = viterbi_var[:, m]
+            cur_column = cur_column.tolist()
+            sequence.append(b[cur_column.index(max(cur_column))][m])
 
+        end_viterbi = []
+        end_score = [0] * 10
+        for i in range(0, len(self.N_list)):
+            end_score[i] = viterbi_var[i][-1] + self.get_score("", self.N_list[i], "END")
+        max_end_score = max(end_score)
+        sequence.append(self.N_list[end_score.index(max_end_score)])
 
         return sequence
 
 
     def accuracy(self, y_true, y_pred):
         correct_cnt = 0
+        total_tags = 0
         for true, pred in zip(y_true, y_pred):
-            if true == pred:
-                correct_cnt += 1
+            for t, p in zip(true, pred):
+                total_tags += 1
+                if t == p:
+                    correct_cnt += 1
 
-        return float(correct_cnt) / float(len(y_pred))
+        return correct_cnt / total_tags
